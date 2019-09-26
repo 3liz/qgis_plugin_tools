@@ -1,0 +1,2 @@
+i18n_%:
+	$(MAKE) -C qgis_plugin_tools $* LOCALES=$(LOCALES)
