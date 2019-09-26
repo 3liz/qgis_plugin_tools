@@ -1,4 +1,4 @@
-from os.path import abspath, join, pardir
+from os.path import abspath, join, pardir, dirname
 
 from qgis.PyQt import uic
 
@@ -12,7 +12,8 @@ def resources_path(*args):
     :return: Absolute path to the resources folder.
     :rtype: str
     """
-    path = abspath(join(__file__, pardir, 'resources'))
+    path = dirname(__file__)
+    path = abspath(abspath(join(path, pardir, 'resources')))
     for item in args:
         path = abspath(join(path, item))
 
