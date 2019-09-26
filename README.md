@@ -1,3 +1,3 @@
 # qgis-plugin-tools
 
-Todo
+Core tools for some QGIS plugins
