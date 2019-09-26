@@ -26,6 +26,7 @@ LOGGER.info('Log some info here')
 
 * Go to the root folder of your plugin
 * `git submodule add git@github.com:3liz/qgis_plugin_tools.git`
+* `pip3 install -r requirements_dev.txt`
 * Update the makefile to use `git-archive-all`
 
 For setting up the logging:
