@@ -2,8 +2,12 @@
 
 import logging
 
-from .i18n import tr
 from qgis.core import QgsMessageLog, Qgis
+
+from .i18n import tr
+from .resources import plugin_name
+
+PLUGIN_NAME = plugin_name()
 
 __copyright__ = "Copyright 2019, 3Liz"
 __license__ = "GPL version 3"
@@ -56,13 +60,13 @@ class QgsLogHandler(logging.Handler):
         """
         try:
             QgsMessageLog.logMessage(
-                record.getMessage(), 'QuickOSM', qgis_level(record.levelname))
+                record.getMessage(), PLUGIN_NAME, qgis_level(record.levelname))
         except MemoryError:
             message = tr(
-                'Due to memory limitations on this machine, the plugin can not '
-                'handle the full log')
+                'Due to memory limitations on this machine, the plugin {} can not '
+                'handle the full log').format(PLUGIN_NAME)
             print(message)
-            QgsMessageLog.logMessage(message, 'QuickOSM', Qgis.Critical)
+            QgsMessageLog.logMessage(message, PLUGIN_NAME, Qgis.Critical)
 
 
 def add_logging_handler_once(logger, handler):
