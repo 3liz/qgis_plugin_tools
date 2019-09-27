@@ -1,5 +1,12 @@
 export LOCALES
 
+help:
+	@echo Using translation Makefile commands
+	@echo make i18n_1_prepare : To get strings in TS files
+	@echo make i18n_2_push : To push strings to Transifex
+	@echo make i18n_3_pull : To pull strings from Transifex
+	@echo make i18n_4_compile : To compile TS to QM files
+
 1_prepare:
 	@echo Updating strings locally 1/4
 	./update_strings.sh $(LOCALES)
