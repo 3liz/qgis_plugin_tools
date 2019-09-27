@@ -24,7 +24,6 @@ LOGGER.info('Log some info here')
 ```
 
 Use the Makefile in your plugin root folder:
-* to do translations
 
 ```bash
 make i18n_help
@@ -32,6 +31,10 @@ make i18n_1_prepare
 make i18n_2_push
 make i18n_3_pull
 make i18n_4_compile
+
+make deploy_help
+make deploy_zip
+make deploy_upload
 ```
 
 ### How to install it in an existing plugin

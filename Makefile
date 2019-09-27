@@ -1,4 +1,5 @@
 export LOCALES
+export PLUGINNAME
 
 help:
 	@echo Using translation Makefile commands
@@ -6,6 +7,22 @@ help:
 	@echo make i18n_2_push : To push strings to Transifex
 	@echo make i18n_3_pull : To pull strings from Transifex
 	@echo make i18n_4_compile : To compile TS to QM files
+	@echo
+	@echo Deploy plugin
+	@echo make deploy_zip : To generate the ZIP file
+	@echo make deploy_upload : To upload the ZIP on plugins.qgis.org
+
+zip:
+	@echo
+	@echo "------------------------------------"
+	@echo "Exporting plugin to zip package.	"
+	@echo "------------------------------------"
+	@rm -f ../$(PLUGINNAME).zip
+	@git-archive-all --prefix=$(PLUGINNAME)/ ../$(PLUGINNAME).zip
+	@echo "Created package: $(PLUGINNAME).zip"
+
+upload:
+	@echo "Not yet implemented"
 
 1_prepare:
 	@echo Updating strings locally 1/4
