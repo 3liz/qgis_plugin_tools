@@ -17,9 +17,10 @@ from .qgis_plugin_tools.resources import plugin_name
 LOGGER = logging.getLogger(plugin_name())
 
 # Later in the code
+LOGGER.debug('Log some debug messages')
+LOGGER.critical('Log a critical error here')
 LOGGER.error('Log an error here')
 LOGGER.warning('Log a warning here')
-LOGGER.critical('Log a critical error here')
 LOGGER.info('Log some info here')
 ```
 
@@ -53,7 +54,7 @@ setup_logger(plugin_name())
 ```
 
 Setting the Makefile:
-* Copy the Makefile.parent content to your plugin's Makefile.
+* Copy the `Makefile.parent` content to your plugin's Makefile.
 
 ## Plugin tree example
 
