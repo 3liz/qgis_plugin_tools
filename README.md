@@ -53,6 +53,20 @@ from .qgis_plugin_tools.custom_logging import setup_logger
 setup_logger(plugin_name())
 ```
 
+For setting up the translation file:
+```python
+from .qgis_plugin_tools.i18n import setup_translation
+
+locale = setup_translation()
+# or with a custom file pattern
+locale = setup_translation('QuickOSM_{}.qm')
+
+if locale:
+    self.translator = QTranslator()
+    self.translator.load(locale)
+    QCoreApplication.installTranslator(self.translator)
+```
+
 Setting the Makefile:
 * Copy the `Makefile.parent` content to your plugin's Makefile.
 
