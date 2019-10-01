@@ -36,6 +36,23 @@ def metadata_config():
     return config
 
 
+def plugin_test_data_path(*args):
+    """Get the path to the plugin test data path.
+
+    :param args List of path elements e.g. ['img', 'logos', 'image.png']
+    :type args: str
+
+    :return: Absolute path to the resources folder.
+    :rtype: str
+    """
+    path = dirname(__file__)
+    path = abspath(abspath(join(path, pardir, 'test', 'data')))
+    for item in args:
+        path = abspath(join(path, item))
+
+    return path
+
+
 def resources_path(*args):
     """Get the path to our resources folder.
 
