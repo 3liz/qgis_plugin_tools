@@ -41,7 +41,7 @@ make deploy_upload
 ### How to install it in an existing plugin
 
 * Go to the root folder of your plugin
-* `git submodule add git@github.com:3liz/qgis_plugin_tools.git`
+* `git submodule add https://github.com/3liz/qgis_plugin_tools.git`
 * `pip3 install -r requirements_dev.txt`
 * Update the makefile to use `git-archive-all`
 
