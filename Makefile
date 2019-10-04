@@ -1,6 +1,19 @@
 export LOCALES
 export PLUGINNAME
 
+docker_test:
+	@echo Running tests inside $(PLUGINNAME)
+	@docker stop qgis-testing-environment
+	@docker rm qgis-testing-environment
+	@docker run -d --name qgis-testing-environment -v ${PWD}:/$(PLUGINNAME) -e DISPLAY=:99 qgis/qgis:release-3_4
+	@sleep 10
+	@docker exec -it qgis-testing-environment sh -c "qgis_setup.sh $(PLUGINNAME)"
+	@docker exec -it qgis-testing-environment sh -c "qgis_testrunner.sh $(PLUGINNAME).test_runner.test_package"
+	@status=$?
+	@docker stop qgis-testing-environment
+	@docker rm qgis-testing-environment
+	@exit ${status}
+
 help:
 	@echo Using translation Makefile commands
 	@echo make i18n_1_prepare : To get strings in TS files

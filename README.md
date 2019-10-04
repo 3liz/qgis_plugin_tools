@@ -27,6 +27,8 @@ LOGGER.info('Log some info here')
 Use the Makefile in your plugin root folder:
 
 ```bash
+make docker_test
+
 make i18n_help
 make i18n_1_prepare
 make i18n_2_push
