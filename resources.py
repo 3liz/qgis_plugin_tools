@@ -1,7 +1,6 @@
 """Tools to work with resource files."""
 
 import configparser
-
 from os.path import abspath, join, pardir, dirname
 
 from qgis.PyQt import uic

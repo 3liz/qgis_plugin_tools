@@ -15,7 +15,6 @@ __email__ = "info@3liz.org"
 __revision__ = '$Format:%H$'
 
 
-
 def qgis_level(logging_level):
     """Check for the corresponding QGIS Level according to Logging Level.
 
@@ -46,7 +45,6 @@ def qgis_level(logging_level):
 
 
 class QgsLogHandler(logging.Handler):
-
     """A logging handler that will log messages to the QGIS logging console."""
 
     def __init__(self, level=logging.NOTSET):

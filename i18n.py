@@ -1,8 +1,8 @@
 """I18n tools."""
 
-from qgis.core import QgsSettings
-from qgis.PyQt.QtCore import QLocale, QTranslator, QFileInfo, QCoreApplication
+from qgis.PyQt.QtCore import QLocale, QFileInfo
 from qgis.PyQt.QtWidgets import QApplication
+from qgis.core import QgsSettings
 
 from .resources import resources_path
 
