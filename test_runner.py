@@ -1,9 +1,7 @@
 import sys
 import unittest
 
-from osgeo import gdal
-from qgis.PyQt import Qt
-from qgis.core import Qgis
+from .conftest import pytest_report_header
 
 __copyright__ = 'Copyright 2019, 3Liz'
 __license__ = 'GPL version 3'
@@ -18,11 +16,8 @@ def _run_tests(test_suite, package_name):
     """
     count = test_suite.countTestCases()
     print('########')
+    print(pytest_report_header(None))
     print('{} tests has been discovered in {}'.format(count, package_name))
-    print('QGIS : {}'.format(Qgis.QGIS_VERSION_INT))
-    print('Python GDAL : {}'.format(gdal.VersionInfo('VERSION_NUM')))
-    print('QT : {}'.format(Qt.QT_VERSION_STR))
-    print('Python path : {}'.format(sys.path))
     print('########')
     unittest.TextTestRunner(verbosity=3, stream=sys.stdout).run(test_suite)
 
