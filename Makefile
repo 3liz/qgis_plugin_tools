@@ -1,6 +1,20 @@
 export LOCALES
 export PLUGINNAME
 
+help:
+	@echo Run tests inside Docker
+	@echo make docker_test
+	@echo
+	@echo Using translation Makefile commands
+	@echo make i18n_1_prepare : To get strings in TS files
+	@echo make i18n_2_push : To push strings to Transifex
+	@echo make i18n_3_pull : To pull strings from Transifex
+	@echo make i18n_4_compile : To compile TS to QM files
+	@echo
+	@echo Deploy plugin
+	@echo make deploy_zip : To generate the ZIP file
+	@echo make deploy_upload : To upload the ZIP on plugins.qgis.org
+
 docker_test:
 	@echo Running tests inside $(PLUGINNAME)
 	@docker stop qgis-testing-environment
@@ -14,18 +28,7 @@ docker_test:
 	@docker rm qgis-testing-environment
 	@exit ${status}
 
-help:
-	@echo Using translation Makefile commands
-	@echo make i18n_1_prepare : To get strings in TS files
-	@echo make i18n_2_push : To push strings to Transifex
-	@echo make i18n_3_pull : To pull strings from Transifex
-	@echo make i18n_4_compile : To compile TS to QM files
-	@echo
-	@echo Deploy plugin
-	@echo make deploy_zip : To generate the ZIP file
-	@echo make deploy_upload : To upload the ZIP on plugins.qgis.org
-
-zip:
+deploy_zip:
 	@echo
 	@echo "------------------------------------"
 	@echo "Exporting plugin to zip package.	"
@@ -34,21 +37,21 @@ zip:
 	@git-archive-all --prefix=$(PLUGINNAME)/ ../$(PLUGINNAME).zip
 	@echo "Created package: $(PLUGINNAME).zip"
 
-upload:
+deploy_upload:
 	@echo "Not yet implemented"
 
-1_prepare:
+i18n_1_prepare:
 	@echo Updating strings locally 1/4
 	./update_strings.sh $(LOCALES)
 
-2_push:
+i18n_2_push:
 	@echo Push strings to Transifex 2/4
 	@cd .. && tx push -s
 
-3_pull:
+i18n_3_pull:
 	@echo Pull strings from Transifex 3/4
 	@cd .. && tx pull -a
 
-4_compile:
+i18n_4_compile:
 	@echo Compile TS files to QM 4/4
 	@for f in $(LOCALES); do lrelease ../resources/i18n/$${f}.ts -qm ../resources/i18n/$${f}.qm; done
