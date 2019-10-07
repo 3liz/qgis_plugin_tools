@@ -1,8 +1,10 @@
 export LOCALES
 export PLUGINNAME
 
+VERSION := $(cat ..metadata.txt | grep "version=" |  cut -d '=' -f2)
+
 help:
-	@echo Run tests inside Docker
+	@echo Run tests inside docker
 	@echo make docker_test
 	@echo
 	@echo Using translation Makefile commands
@@ -30,15 +32,28 @@ docker_test:
 
 deploy_zip:
 	@echo
-	@echo "------------------------------------"
-	@echo "Exporting plugin to zip package.	"
-	@echo "------------------------------------"
+	@echo -------------------------------
+	@echo Exporting plugin to zip package
+	@echo -------------------------------
 	@rm -f ../$(PLUGINNAME).zip
-	@git-archive-all --prefix=$(PLUGINNAME)/ ../$(PLUGINNAME).zip
+	@cd .. && git-archive-all --prefix=$(PLUGINNAME)/ $(PLUGINNAME).zip
 	@echo "Created package: $(PLUGINNAME).zip"
 
+deploy_tag:
+	@echo
+	@echo -------------------------------
+	@echo Deploy tag on the remote
+	@echo -------------------------------
+	@echo Version :: $(VERSION)
+	# @cd .. && METADATA=$(cat metadata.txt | grep "version=" |  cut -d '=' -f2) git tag v${METADATA}
+	@cd .. && METADATA=$(cat metadata.txt | grep "version=" |  cut -d '=' -f2) echo Tag created v${METADATA}
+
 deploy_upload:
-	@echo "Not yet implemented"
+	@echo
+	@echo -----------------------------------------
+	@echo Uploading the plugin on plugins.qgis.org.
+	@echo -----------------------------------------
+	@./plugin_upload.py ../$(PLUGINNAME).zip
 
 i18n_1_prepare:
 	@echo Updating strings locally 1/4

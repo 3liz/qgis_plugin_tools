@@ -72,6 +72,9 @@ if locale:
 Setting the Makefile:
 * Copy the `Makefile.parent` content to your plugin's Makefile.
 
+* Using the plugin upload function, check the `--help` of the `plugin_upload.py` file.
+For instance, you can setup environment variable in your bash for your credentials.
+
 ## Plugin tree example
 
 Plugin `Foo` root folder:

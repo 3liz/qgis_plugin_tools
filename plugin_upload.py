@@ -1,15 +1,15 @@
 #!/usr/bin/env python
-"""This script uploads a plugin package to the plugin repository.
-        Authors: A. Pasotti, V. Picavet
-        git sha              : $TemplateVCSFormat
+"""
+This script uploads a plugin package to the plugin repository.
+
+Authors: A. Pasotti, V. Picavet
 """
 
+import os
 import getpass
 import sys
 import xmlrpc.client
 from optparse import OptionParser
-
-standard_library.install_aliases()
 
 # Configuration
 PROTOCOL = 'https'
@@ -75,10 +75,14 @@ if __name__ == "__main__":
     parser = OptionParser(usage="%prog [options] plugin.zip")
     parser.add_option(
         "-w", "--password", dest="password",
-        help="Password for plugin site", metavar="******")
+        help="Password for plugin site. "
+             "You can use environment variable 'PLUGIN_UPLOAD_PASSWORD', "
+             "or the password will be prompted on runtime.", metavar="******")
     parser.add_option(
         "-u", "--username", dest="username",
-        help="Username of plugin site", metavar="user")
+        help="Username of plugin site. "
+             "You can use environment variable 'PLUGIN_UPLOAD_USERNAME', "
+             "or the username will be prompted on runtime.", metavar="user")
     parser.add_option(
         "-p", "--port", dest="port",
         help="Server port to connect to", metavar="80")
@@ -95,16 +99,26 @@ if __name__ == "__main__":
     if not options.port:
         options.port = PORT
     if not options.username:
-        # interactive mode
-        username = getpass.getuser()
-        print("Please enter user name [%s] :" % username, end=' ')
-
-        res = input()
-        if res != "":
-            options.username = res
-        else:
+        username = os.environ.get('PLUGIN_UPLOAD_USERNAME')
+        if username:
+            # environment variable
             options.username = username
+        else:
+            # interactive mode
+            username = getpass.getuser()
+            print("Please enter user name [%s] :" % username, end=' ')
+
+            res = input()
+            if res != "":
+                options.username = res
+            else:
+                options.username = username
     if not options.password:
-        # interactive mode
-        options.password = getpass.getpass()
+        password = os.environ.get('PLUGIN_UPLOAD_PASSWORD')
+        if password:
+            # environment variable
+            options.password = password
+        else:
+            # interactive mode
+            options.password = getpass.getpass()
     main(options, args)
