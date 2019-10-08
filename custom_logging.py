@@ -9,9 +9,9 @@ from .resources import plugin_name
 
 PLUGIN_NAME = plugin_name()
 
-__copyright__ = "Copyright 2019, 3Liz"
-__license__ = "GPL version 3"
-__email__ = "info@3liz.org"
+__copyright__ = 'Copyright 2019, 3Liz'
+__license__ = 'GPL version 3'
+__email__ = 'info@3liz.org'
 __revision__ = '$Format:%H$'
 
 

@@ -60,8 +60,6 @@ For setting up the translation file:
 from .qgis_plugin_tools.i18n import setup_translation
 
 locale = setup_translation()
-# or with a custom file pattern
-locale = setup_translation('QuickOSM_{}.qm')
 
 if locale:
     self.translator = QTranslator()
@@ -81,7 +79,12 @@ Plugin `Foo` root folder:
 * `qgis_plugins_tools/` submodule
 * `resources/`
   * `i18n/`
+    * `fr.ts`
+    * `fr.qm`
   * `ui/`
+    * `main_dialog.ui`
+  * `icons/`
+    * `my_icon.svg`
 * `test/`
 * `.gitattributes`
 * `.gitmodules`
