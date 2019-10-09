@@ -1,6 +1,7 @@
 export LOCALES
 export PLUGINNAME
 
+QGIS_VERSION = release-3_4
 VERSION := $(cat ..metadata.txt | grep "version=" |  cut -d '=' -f2)
 
 help:
@@ -19,16 +20,7 @@ help:
 
 docker_test:
 	@echo Running tests inside $(PLUGINNAME)
-	@docker stop qgis-testing-environment
-	@docker rm qgis-testing-environment
-	@docker run -d --name qgis-testing-environment -v ${PWD}:/$(PLUGINNAME) -e DISPLAY=:99 qgis/qgis:release-3_4
-	@sleep 10
-	@docker exec -it qgis-testing-environment sh -c "qgis_setup.sh $(PLUGINNAME)"
-	@docker exec -it qgis-testing-environment sh -c "qgis_testrunner.sh $(PLUGINNAME).test_runner.test_package"
-	@status=$?
-	@docker stop qgis-testing-environment
-	@docker rm qgis-testing-environment
-	@exit ${status}
+	@./docker_test.sh $(PLUGINNAME) $(QGIS_VERSION)
 
 deploy_zip:
 	@echo
