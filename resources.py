@@ -11,6 +11,23 @@ __email__ = 'info@3liz.org'
 __revision__ = '$Format:%H$'
 
 
+def plugin_path(*args):
+    """Get the path to plugin root folder.
+
+    :param args List of path elements e.g. ['img', 'logos', 'image.png']
+    :type args: str
+
+    :return: Absolute path to the resoure.
+    :rtype: str
+    """
+    path = dirname(__file__)
+    path = abspath(abspath(join(path, pardir)))
+    for item in args:
+        path = abspath(join(path, item))
+
+    return path
+
+
 def plugin_name():
     """Return the plugin name according to metadata.txt.
 
@@ -28,8 +45,7 @@ def metadata_config():
     :return: The config parser object.
     :rtype: configparser
     """
-    path = dirname(__file__)
-    path = abspath(abspath(join(path, pardir, 'metadata.txt')))
+    path = plugin_path('metadata.txt')
     config = configparser.ConfigParser()
     config.read(path)
     return config
@@ -44,8 +60,7 @@ def plugin_test_data_path(*args):
     :return: Absolute path to the resources folder.
     :rtype: str
     """
-    path = dirname(__file__)
-    path = abspath(abspath(join(path, pardir, 'test', 'data')))
+    path = abspath(abspath(join(plugin_path(), 'test', 'data')))
     for item in args:
         path = abspath(join(path, item))
 
@@ -61,8 +76,7 @@ def resources_path(*args):
     :return: Absolute path to the resources folder.
     :rtype: str
     """
-    path = dirname(__file__)
-    path = abspath(abspath(join(path, pardir, 'resources')))
+    path = abspath(abspath(join(plugin_path(), 'resources')))
     for item in args:
         path = abspath(join(path, item))
 
