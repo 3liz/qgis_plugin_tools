@@ -1,5 +1,5 @@
 # Add ISO code for any locales you want to support here (space separated)
-LOCALES = fr
+LOCALES = "fr de"
 # Name of the plugin, for the ZIP file
 PLUGINNAME = your_plugin_name
 
@@ -12,5 +12,5 @@ docker_test:
 i18n_%:
 	$(MAKE) -C qgis_plugin_tools i18n_$* LOCALES=$(LOCALES)
 
-deploy_%:
-	$(MAKE) -C qgis_plugin_tools deploy_$* PLUGINNAME=$(PLUGINNAME)
+release_%:
+	$(MAKE) -C qgis_plugin_tools release_$* PLUGINNAME=$(PLUGINNAME)

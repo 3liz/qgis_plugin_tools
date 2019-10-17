@@ -2,7 +2,7 @@ export LOCALES
 export PLUGINNAME
 
 QGIS_VERSION = release-3_4
-VERSION := $(cat ..metadata.txt | grep "version=" |  cut -d '=' -f2)
+# VERSION := $(cat ..metadata.txt | grep "version=" |  cut -d '=' -f2)
 
 help:
 	@echo Run tests inside docker
@@ -14,15 +14,17 @@ help:
 	@echo make i18n_3_pull : To pull strings from Transifex
 	@echo make i18n_4_compile : To compile TS to QM files
 	@echo
-	@echo Deploy plugin
-	@echo make deploy_zip : To generate the ZIP file
-	@echo make deploy_upload : To upload the ZIP on plugins.qgis.org
+	@echo Release plugin:
+	@echo Prepare the last commit before the release
+	@echo make release_zip : To generate the ZIP file and test it
+	@echo Then make the tag and push it `git push remote --tags
+	@echo make release_upload : To upload the ZIP on plugins.qgis.org
 
 docker_test:
 	@echo Running tests inside $(PLUGINNAME)
-	@./docker_test.sh $(PLUGINNAME) $(QGIS_VERSION)
+	@./infrastructure/docker_test.sh $(PLUGINNAME) $(QGIS_VERSION)
 
-deploy_zip:
+release_zip:
 	@echo
 	@echo -------------------------------
 	@echo Exporting plugin to zip package
@@ -31,25 +33,25 @@ deploy_zip:
 	@cd .. && git-archive-all --prefix=$(PLUGINNAME)/ $(PLUGINNAME).zip
 	@echo "Created package: $(PLUGINNAME).zip"
 
-deploy_tag:
+release_tag:
 	@echo
 	@echo -------------------------------
-	@echo Deploy tag on the remote
+	@echo Release a tag on the remote
 	@echo -------------------------------
 	@echo Version :: $(VERSION)
 	# @cd .. && METADATA=$(cat metadata.txt | grep "version=" |  cut -d '=' -f2) git tag v${METADATA}
 	@cd .. && METADATA=$(cat metadata.txt | grep "version=" |  cut -d '=' -f2) echo Tag created v${METADATA}
 
-deploy_upload:
+release_upload:
 	@echo
 	@echo -----------------------------------------
 	@echo Uploading the plugin on plugins.qgis.org.
 	@echo -----------------------------------------
-	@./plugin_upload.py ../$(PLUGINNAME).zip
+	@./infrastructure/plugin_upload.py ../$(PLUGINNAME).zip
 
 i18n_1_prepare:
 	@echo Updating strings locally 1/4
-	./update_strings.sh $(LOCALES)
+	./infrastructure/update_strings.sh $(LOCALES)
 
 i18n_2_push:
 	@echo Push strings to Transifex 2/4

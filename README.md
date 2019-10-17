@@ -1,5 +1,7 @@
 ## QGIS Plugin core tools
 
+## The API is not stable yet. Function and files may move between commits.
+
 ### How to use it
 
 The module is helping you with:
@@ -27,17 +29,17 @@ LOGGER.info('Log some info here')
 Use the Makefile in your plugin root folder:
 
 ```bash
+make help
+
 make docker_test
 
-make i18n_help
 make i18n_1_prepare
 make i18n_2_push
 make i18n_3_pull
 make i18n_4_compile
 
-make deploy_help
-make deploy_zip
-make deploy_upload
+make release_zip
+make release_upload
 ```
 
 ### How to install it in an existing plugin
@@ -93,3 +95,10 @@ Plugin `Foo` root folder:
 * `foo.py`
 * `Makefile`
 * `metadata.txt`
+
+## Plugins using this module
+
+* [QuickOSM](https://github.com/3liz/QuickOSM)
+* [DSVI](https://github.com/3liz/qgis_drain_sewer_visual_inspection)
+* [Layer Board](https://github.com/3liz/QgisLayerBoardPlugin/)
+* [Lizmap](https://github.com/3liz/lizmap-plugin/)
