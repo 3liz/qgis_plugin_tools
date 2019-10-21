@@ -6,7 +6,7 @@ from qgis.PyQt.QtCore import QLocale, QFileInfo
 from qgis.PyQt.QtWidgets import QApplication
 from qgis.core import QgsSettings
 
-from qgis_plugin_tools.tools.resources import resources_path
+from .resources import resources_path
 
 __copyright__ = 'Copyright 2019, 3Liz'
 __license__ = 'GPL version 3'
