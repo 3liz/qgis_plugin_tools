@@ -20,7 +20,7 @@ def plugin_path(*args):
     :return: Absolute path to the resoure.
     :rtype: str
     """
-    path = dirname(__file__)
+    path = dirname(dirname(__file__))
     path = abspath(abspath(join(path, pardir)))
     for item in args:
         path = abspath(join(path, item))

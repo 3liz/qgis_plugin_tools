@@ -4,8 +4,8 @@ import logging
 
 from qgis.core import QgsMessageLog, Qgis
 
-from .i18n import tr
-from .resources import plugin_name
+from qgis_plugin_tools.tools.i18n import tr
+from qgis_plugin_tools.tools.resources import plugin_name
 
 PLUGIN_NAME = plugin_name()
 
