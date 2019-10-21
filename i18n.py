@@ -18,20 +18,20 @@ def setup_translation(file_pattern='{}.qm'):
     :param file_pattern: Custom file pattern to use to find QM files.
     :type file_pattern: basestring
 
-    :return: The file path to the QM file, or None.
-    :rtype: basestring
+    :return: The locale and the file path to the QM file, or None.
+    :rtype: (basestring, basestring)
     """
     locale = QgsSettings().value('locale/userLocale', QLocale().name())
 
     ts_file = QFileInfo(resources_path('i18n', file_pattern.format(locale)))
     if ts_file.exists():
-        return ts_file.absoluteFilePath()
+        return locale, ts_file.absoluteFilePath()
 
     ts_file = QFileInfo(resources_path('i18n', file_pattern.format(locale[0:2])))
     if ts_file.exists():
-        return ts_file.absoluteFilePath()
+        return locale, ts_file.absoluteFilePath()
 
-    return None
+    return locale, None
 
 
 def tr(text, context='@Default'):
