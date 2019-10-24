@@ -24,6 +24,10 @@ docker_test:
 	@echo Running tests inside $(PLUGINNAME)
 	@./infrastructure/docker_test.sh $(PLUGINNAME) $(QGIS_VERSION)
 
+docker_server_test:
+	@echo Running tests inside $(PLUGINNAME)
+	@./infrastructure/docker_server_test.sh $(PLUGINNAME) $(QGIS_VERSION)
+
 release_zip:
 	@echo
 	@echo -------------------------------

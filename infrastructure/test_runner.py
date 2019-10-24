@@ -1,8 +1,6 @@
 import sys
 import unittest
 
-from .conftest import pytest_report_header
-
 __copyright__ = 'Copyright 2019, 3Liz'
 __license__ = 'GPL version 3'
 __email__ = 'info@3liz.org'
@@ -16,7 +14,6 @@ def _run_tests(test_suite, package_name):
     """
     count = test_suite.countTestCases()
     print('########')
-    print(pytest_report_header(None))
     print('{} tests has been discovered in {}'.format(count, package_name))
     print('########')
     unittest.TextTestRunner(verbosity=3, stream=sys.stdout).run(test_suite)
