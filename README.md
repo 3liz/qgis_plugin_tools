@@ -13,7 +13,7 @@ The module is helping you with:
 To use the logging system:
 ```python
 import logging
-from .qgis_plugin_tools.resources import plugin_name
+from .qgis_plugin_tools.tools.resources import plugin_name
 
 # Top of the file
 LOGGER = logging.getLogger(plugin_name())
@@ -51,15 +51,15 @@ make release_upload
 
 For setting up the logging:
 ```python
-from .qgis_plugin_tools.resources import plugin_name
-from .qgis_plugin_tools.custom_logging import setup_logger
+from .qgis_plugin_tools.tools.resources import plugin_name
+from .qgis_plugin_tools.tools.custom_logging import setup_logger
 
 setup_logger(plugin_name())
 ```
 
 For setting up the translation file:
 ```python
-from .qgis_plugin_tools.i18n import setup_translation
+from .qgis_plugin_tools.tools.i18n import setup_translation
 
 locale = setup_translation()
 
