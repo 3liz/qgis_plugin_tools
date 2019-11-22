@@ -36,11 +36,13 @@ release_zip:
 release_tag:
 	@echo
 	@echo -------------------------------
-	@echo Release a tag on the remote
+	@echo Create the commit and the tag locally
 	@echo -------------------------------
 	@echo Version :: $(VERSION)
 	# @cd .. && METADATA=$(cat metadata.txt | grep "version=" |  cut -d '=' -f2) git tag v${METADATA}
-	@cd .. && METADATA=$(cat metadata.txt | grep "version=" |  cut -d '=' -f2) echo Tag created v${METADATA}
+	@cd .. && git commit -am 'Release version $(VERSION)'
+	@cd .. && git tag $(VERSION)
+	@echo Tag created, you should use git push upstream $(VERSION)
 
 release_upload:
 	@echo
