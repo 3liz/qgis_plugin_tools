@@ -1,5 +1,6 @@
 """QCombobox with checkbox for selecting multiple items."""
 
+from qgis.core import QgsMapLayer
 from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QStandardItemModel, QStandardItem
 from qgis.PyQt.QtWidgets import QStyledItemDelegate
@@ -8,6 +9,7 @@ __copyright__ = 'Copyright 2019, 3Liz'
 __license__ = 'GPL version 3'
 __email__ = 'info@3liz.org'
 __revision__ = '$Format:%H$'
+
 
 
 class CheckableComboBox:
@@ -64,6 +66,12 @@ class CheckableFieldComboBox(CheckableComboBox):
 
     def set_layer(self, layer):
         self.model.clear()
+
+        if not layer:
+            return
+        if layer.type() != QgsMapLayer.VectorLayer:
+            return
+
         self.layer = layer
 
         for i, field in enumerate(self.layer.fields()):
