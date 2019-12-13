@@ -5,7 +5,9 @@ QGIS_VERSION = release-3_4
 # VERSION := $(cat ..metadata.txt | grep "version=" |  cut -d '=' -f2)
 
 help:
-	@echo Run tests inside docker
+	@echo Help about the Makefile
+	@eho
+	@echo Run tests inside docker:
 	@echo make docker_test
 	@echo
 	@echo Using translation Makefile commands
@@ -15,9 +17,10 @@ help:
 	@echo make i18n_4_compile : To compile TS to QM files
 	@echo
 	@echo Release plugin:
-	@echo Prepare the last commit before the release
+	@echo Do the last commit before the release with the metadata.txt
 	@echo make release_zip : To generate the ZIP file and test it
-	@echo Then make the tag and push it `git push remote --tags
+	@echo Then make the tag and push it "git push remote --tags"
+	@echo make release_tag : Not finished TODO
 	@echo make release_upload : To upload the ZIP on plugins.qgis.org
 
 docker_test:

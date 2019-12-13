@@ -39,6 +39,7 @@ make i18n_3_pull
 make i18n_4_compile
 
 make release_zip
+make release_tag
 make release_upload
 ```
 
