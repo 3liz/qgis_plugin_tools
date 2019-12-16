@@ -6,7 +6,7 @@ QGIS_VERSION = release-3_4
 
 help:
 	@echo Help about the Makefile
-	@eho
+	@echo
 	@echo Run tests inside docker:
 	@echo make docker_test
 	@echo
