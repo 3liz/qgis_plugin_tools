@@ -16,7 +16,7 @@ class CheckableComboBox:
 
     """Basic QCombobox with selectable items."""
 
-    def __init__(self, combobox):
+    def __init__(self, combobox, select_all=None):
         """Constructor."""
         self.combo = combobox
         self.combo.setEditable(True)
@@ -26,6 +26,13 @@ class CheckableComboBox:
         self.combo.setItemDelegate(QStyledItemDelegate())
         self.model.itemChanged.connect(self.combo_changed)
         self.combo.lineEdit().textChanged.connect(self.text_changed)
+        if select_all:
+            self.select_all = select_all
+            self.select_all.clicked.connect(self.select_all_clicked)
+
+    def select_all_clicked(self):
+        for item in self.model.findItems('*', Qt.MatchWildcard):
+            item.setCheckState(Qt.Checked)
 
     def append_row(self, item: QStandardItem):
         """Add an item to the combobox."""
@@ -59,10 +66,9 @@ class CheckableComboBox:
 
 class CheckableFieldComboBox(CheckableComboBox):
 
-    def __init__(self, combobox):
+    def __init__(self, combobox, select_all=None):
         self.layer = None
-        super().__init__(combobox)
-        # self.combo.lineEdit().setIcon(None)
+        super().__init__(combobox, select_all)
 
     def set_layer(self, layer):
         self.model.clear()
