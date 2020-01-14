@@ -39,11 +39,11 @@ def plugin_name():
     return name
 
 
-def metadata_config():
+def metadata_config() -> configparser:
     """Get the INI config parser for the metadata file.
 
     :return: The config parser object.
-    :rtype: configparser
+    :rtype: ConfigParser
     """
     path = plugin_path('metadata.txt')
     config = configparser.ConfigParser()
