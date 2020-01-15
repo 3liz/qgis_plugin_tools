@@ -7,6 +7,9 @@ QGIS_VERSION = release-3_4
 help:
 	@echo Help about the Makefile
 	@echo
+	@echo Run PyLint
+	@echo make pylint
+	@echo
 	@echo Run tests inside docker:
 	@echo make docker_test
 	@echo
@@ -22,6 +25,10 @@ help:
 	@echo Then make the tag and push it "git push remote --tags"
 	@echo make release_tag : Not finished TODO
 	@echo make release_upload : To upload the ZIP on plugins.qgis.org
+
+pylint:
+	@echo Running PyLint $(PLUGINNAME)
+	@pylint --ignore=$(EXCLUDED_FILES) ../
 
 docker_test:
 	@echo Running tests inside $(PLUGINNAME)
