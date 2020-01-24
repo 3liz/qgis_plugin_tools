@@ -2,6 +2,10 @@
 
 ## The API is not stable yet. Function and files may move between commits.
 
+As it's a submodule, you can configure your GIT to auto update the submodule commit by running:
+
+`git config --global submodule.recurse true`
+
 ### How to use it
 
 The module is helping you with:
