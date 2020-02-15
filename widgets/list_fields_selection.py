@@ -29,7 +29,11 @@ class ListFieldsSelection(QListWidget):
 
         for field in self.layer.fields():
             cell = QListWidgetItem()
-            cell.setText(field.name())
+            alias = field.alias()
+            if not alias:
+                cell.setText(field.name())
+            else:
+                cell.setText('{} ({})'.format(field.name(), alias))
             cell.setData(Qt.UserRole, field.name())
             index = layer.fields().indexFromName(field.name())
             if index >= 0:
