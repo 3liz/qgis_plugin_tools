@@ -45,5 +45,5 @@ def setup_translation(file_pattern='{}.qm', folder=None):
     return locale, None
 
 
-def tr(text, context='@Default'):
+def tr(text, context='@default'):
     return QApplication.translate(context, text)
