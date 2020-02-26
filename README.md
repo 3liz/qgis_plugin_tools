@@ -9,10 +9,16 @@ As it's a submodule, you can configure your GIT to auto update the submodule com
 ### How to use it
 
 The module is helping you with:
+* setting up some logging (QgsMessageLog, file log, remote logs...)
 * fetching resources in `resources` folder
 * fetching compiled UI file in `resources/ui` folder
 * fetching compiled translation file in `resources/i18n` folder
-* translate using the `i18n.tr` function.
+* removing QRC resources file easily
+* translate using the `i18n.tr()` function.
+* launching tests on Travis
+* managing the release process : zip, upload on plugins.qgis.org, tag, GitHub release
+* running pylint checks
+* providing some common widgets/code for plugins
 
 To use the logging system:
 ```python
@@ -24,10 +30,10 @@ LOGGER = logging.getLogger(plugin_name())
 
 # Later in the code
 LOGGER.debug('Log some debug messages')
-LOGGER.critical('Log a critical error here')
-LOGGER.error('Log an error here')
-LOGGER.warning('Log a warning here')
 LOGGER.info('Log some info here')
+LOGGER.warning('Log a warning here')
+LOGGER.error('Log an error here')
+LOGGER.critical('Log a critical error here')
 ```
 
 Use the Makefile in your plugin root folder:
@@ -52,7 +58,7 @@ make release_upload
 * Go to the root folder of your plugin
 * `git submodule add https://github.com/3liz/qgis_plugin_tools.git`
 * `pip3 install -r requirements_dev.txt`
-* Update the makefile to use `git-archive-all`
+* Update the makefile with the template
 
 For setting up the logging:
 ```python
@@ -64,14 +70,16 @@ setup_logger(plugin_name())
 
 For setting up the translation file:
 ```python
+from qgis.PyQt.QtCore import QCoreApplication, QTranslator
+
 from .qgis_plugin_tools.tools.i18n import setup_translation
 
-locale = setup_translation()
-
-if locale:
+locale, file_path = setup_translation()
+if file_path:
     self.translator = QTranslator()
-    self.translator.load(locale)
+    self.translator.load(file_path)
     QCoreApplication.installTranslator(self.translator)
+
 ```
 
 Setting the Makefile:
@@ -103,6 +111,7 @@ Plugin `Foo` root folder:
 
 ## Plugins using this module
 
+* [LizSync](https://github.com/3liz/qgis-lizsync-plugin)
 * [QuickOSM](https://github.com/3liz/QuickOSM)
 * [DSVI](https://github.com/3liz/qgis_drain_sewer_visual_inspection)
 * [Layer Board](https://github.com/3liz/QgisLayerBoardPlugin/)

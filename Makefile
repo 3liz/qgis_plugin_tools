@@ -30,6 +30,9 @@ pylint:
 	@echo Running PyLint $(PLUGINNAME)
 	@pylint --ignore=$(EXCLUDED_FILES) ../
 
+test:
+	@echo Use make docker_test for now
+
 docker_test:
 	@echo Running tests inside $(PLUGINNAME)
 	@./infrastructure/docker_test.sh $(PLUGINNAME) $(QGIS_VERSION)

@@ -1,5 +1,5 @@
 # Add ISO code for any locales you want to support here (space separated)
-LOCALES = "fr de"
+LOCALES = "en fr"
 # Name of the plugin, for the ZIP file
 PLUGINNAME = your_plugin_name
 
@@ -8,6 +8,9 @@ help:
 
 pylint:
 	$(MAKE) -C qgis_plugin_tools pylint --ignore=
+
+test:
+    $(MAKE) -C qgis_plugin_tools test
 
 docker_test:
 	$(MAKE) -C qgis_plugin_tools docker_test PLUGINNAME=$(PLUGINNAME)
