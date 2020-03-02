@@ -122,3 +122,5 @@ def setup_logger(logger_name):
     # add the handlers to the logger
     add_logging_handler_once(logger, console_handler)
     add_logging_handler_once(logger, qgis_handler)
+
+    return logger
