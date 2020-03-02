@@ -104,23 +104,17 @@ def setup_logger(logger_name):
     logger = logging.getLogger(logger_name)
     logger.setLevel(logging.DEBUG)
 
-    # create formatter that will be added to the handlers
-    formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-    # create console handler with a higher log level
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.INFO)
-
-    # create a QGIS handler
-    qgis_handler = QgsLogHandler()
-
-    # Set formatters
-    console_handler.setFormatter(formatter)
-    qgis_handler.setFormatter(formatter)
-
-    # add the handlers to the logger
+    console_handler.setLevel(logging.DEBUG)
+    console_formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    console_handler.setFormatter(console_formatter)
     add_logging_handler_once(logger, console_handler)
+
+    qgis_handler = QgsLogHandler()
+    qgis_formatter = logging.Formatter(
+        '%(levelname)s - %(message)s')
+    qgis_handler.setFormatter(qgis_formatter)
     add_logging_handler_once(logger, qgis_handler)
 
     return logger

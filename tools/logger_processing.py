@@ -13,7 +13,7 @@ LOGGER = setup_logger(plugin_name())
 
 
 class LoggerProcessingFeedBack(QgsProcessingFeedback):
-    def __init__(self, use_logger=False):
+    def __init__(self, use_logger=True):
         super().__init__()
         self._last = None
         self.use_logger = use_logger
@@ -26,44 +26,44 @@ class LoggerProcessingFeedBack(QgsProcessingFeedback):
 
     @property
     def last(self):
-        return self.last
+        return self._last
 
     @last.setter
     def last(self, text):
         self._last = text
 
     def setProgressText(self, text):
-        self.last = text
+        self._last = text
         self.last_progress_text = text
         if self.use_logger:
             LOGGER.info(text)
 
     def pushInfo(self, text):
-        self.last = text
+        self._last = text
         self.last_push_info = text
         if self.use_logger:
             LOGGER.info(text)
 
     def pushCommandInfo(self, text):
-        self.last = text
+        self._last = text
         self.last_command_info = text
         if self.use_logger:
             LOGGER.info(text)
 
     def pushDebugInfo(self, text):
-        self.last = text
+        self._last = text
         self.last_debug_info = text
         if self.use_logger:
             LOGGER.warning(text)
 
     def pushConsoleInfo(self, text):
-        self.last = text
+        self._last = text
         self.last_console_info = text
         if self.use_logger:
             LOGGER.info(text)
 
     def reportError(self, text, fatalError=False):
-        self.last = text
+        self._last = text
         self.last_report_error = text
         if self.use_logger:
             LOGGER.critical(text)
