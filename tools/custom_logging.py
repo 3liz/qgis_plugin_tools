@@ -9,10 +9,10 @@ from .resources import plugin_name
 
 PLUGIN_NAME = plugin_name()
 
-__copyright__ = 'Copyright 2019, 3Liz'
-__license__ = 'GPL version 3'
-__email__ = 'info@3liz.org'
-__revision__ = '$Format:%H$'
+__copyright__ = "Copyright 2019, 3Liz"
+__license__ = "GPL version 3"
+__email__ = "info@3liz.org"
+__revision__ = "$Format:%H$"
 
 
 def qgis_level(logging_level):
@@ -30,15 +30,15 @@ def qgis_level(logging_level):
     :return: The QGIS Level
     :rtype: Qgis.MessageLevel
     """
-    if logging_level == 'CRITICAL':
+    if logging_level == "CRITICAL":
         return Qgis.Critical
-    elif logging_level == 'ERROR':
+    elif logging_level == "ERROR":
         return Qgis.Critical
-    elif logging_level == 'WARNING':
+    elif logging_level == "WARNING":
         return Qgis.Warning
-    elif logging_level == 'INFO':
+    elif logging_level == "INFO":
         return Qgis.Info
-    elif logging_level == 'DEBUG':
+    elif logging_level == "DEBUG":
         return Qgis.Info
 
     return Qgis.Info
@@ -58,11 +58,13 @@ class QgsLogHandler(logging.Handler):
         """
         try:
             QgsMessageLog.logMessage(
-                record.getMessage(), PLUGIN_NAME, qgis_level(record.levelname))
+                record.getMessage(), PLUGIN_NAME, qgis_level(record.levelname)
+            )
         except MemoryError:
             message = tr(
-                'Due to memory limitations on this machine, the plugin {} can not '
-                'handle the full log').format(PLUGIN_NAME)
+                "Due to memory limitations on this machine, the plugin {} can not "
+                "handle the full log"
+            ).format(PLUGIN_NAME)
             print(message)
             QgsMessageLog.logMessage(message, PLUGIN_NAME, Qgis.Critical)
 
@@ -107,13 +109,13 @@ def setup_logger(logger_name):
     console_handler = logging.StreamHandler()
     console_handler.setLevel(logging.DEBUG)
     console_formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    )
     console_handler.setFormatter(console_formatter)
     add_logging_handler_once(logger, console_handler)
 
     qgis_handler = QgsLogHandler()
-    qgis_formatter = logging.Formatter(
-        '%(levelname)s - %(message)s')
+    qgis_formatter = logging.Formatter("%(levelname)s - %(message)s")
     qgis_handler.setFormatter(qgis_formatter)
     add_logging_handler_once(logger, qgis_handler)
 

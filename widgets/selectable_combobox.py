@@ -5,11 +5,10 @@ from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtGui import QStandardItemModel, QStandardItem
 from qgis.PyQt.QtWidgets import QStyledItemDelegate
 
-__copyright__ = 'Copyright 2019, 3Liz'
-__license__ = 'GPL version 3'
-__email__ = 'info@3liz.org'
-__revision__ = '$Format:%H$'
-
+__copyright__ = "Copyright 2019, 3Liz"
+__license__ = "GPL version 3"
+__email__ = "info@3liz.org"
+__revision__ = "$Format:%H$"
 
 
 class CheckableComboBox:
@@ -31,7 +30,7 @@ class CheckableComboBox:
             self.select_all.clicked.connect(self.select_all_clicked)
 
     def select_all_clicked(self):
-        for item in self.model.findItems('*', Qt.MatchWildcard):
+        for item in self.model.findItems("*", Qt.MatchWildcard):
             item.setCheckState(Qt.Checked)
 
     def append_row(self, item: QStandardItem):
@@ -47,25 +46,24 @@ class CheckableComboBox:
 
     def selected_items(self) -> list:
         checked_items = []
-        for item in self.model.findItems('*', Qt.MatchWildcard):
+        for item in self.model.findItems("*", Qt.MatchWildcard):
             if item.checkState() == Qt.Checked:
                 checked_items.append(item.data())
         return checked_items
 
     def set_selected_items(self, items):
-        for item in self.model.findItems('*', Qt.MatchWildcard):
+        for item in self.model.findItems("*", Qt.MatchWildcard):
             checked = item.data() in items
             item.setCheckState(Qt.Checked if checked else Qt.Unchecked)
 
     def text_changed(self, text):
         """Update the preview with all selected items, separated by a comma."""
-        label = ', '.join(self.selected_items())
+        label = ", ".join(self.selected_items())
         if text != label:
             self.combo.setEditText(label)
 
 
 class CheckableFieldComboBox(CheckableComboBox):
-
     def __init__(self, combobox, select_all=None):
         self.layer = None
         super().__init__(combobox, select_all)
@@ -83,7 +81,7 @@ class CheckableFieldComboBox(CheckableComboBox):
         for i, field in enumerate(self.layer.fields()):
             alias = field.alias()
             if alias:
-                name = '{} ({})'.format(field.name(), alias)
+                name = "{} ({})".format(field.name(), alias)
             else:
                 name = field.name()
             item = QStandardItem(name)

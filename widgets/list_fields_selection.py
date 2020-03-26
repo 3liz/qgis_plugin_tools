@@ -8,14 +8,13 @@ from qgis.PyQt.QtWidgets import (
 )
 from qgis.core import QgsVectorLayer
 
-__copyright__ = 'Copyright 2019, 3Liz'
-__license__ = 'GPL version 3'
-__email__ = 'info@3liz.org'
-__revision__ = '$Format:%H$'
+__copyright__ = "Copyright 2019, 3Liz"
+__license__ = "GPL version 3"
+__email__ = "info@3liz.org"
+__revision__ = "$Format:%H$"
 
 
 class ListFieldsSelection(QListWidget):
-
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setSelectionMode(QAbstractItemView.MultiSelection)
@@ -33,7 +32,7 @@ class ListFieldsSelection(QListWidget):
             if not alias:
                 cell.setText(field.name())
             else:
-                cell.setText('{} ({})'.format(field.name(), alias))
+                cell.setText("{} ({})".format(field.name(), alias))
             cell.setData(Qt.UserRole, field.name())
             index = layer.fields().indexFromName(field.name())
             if index >= 0:

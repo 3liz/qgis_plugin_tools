@@ -3,10 +3,10 @@ import unittest
 
 from .conftest import pytest_report_header
 
-__copyright__ = 'Copyright 2019, 3Liz'
-__license__ = 'GPL version 3'
-__email__ = 'info@3liz.org'
-__revision__ = '$Format:%H$'
+__copyright__ = "Copyright 2019, 3Liz"
+__license__ = "GPL version 3"
+__email__ = "info@3liz.org"
+__revision__ = "$Format:%H$"
 
 
 def _run_tests(test_suite, package_name):
@@ -15,14 +15,14 @@ def _run_tests(test_suite, package_name):
     :param test_suite: Unittest test suite
     """
     count = test_suite.countTestCases()
-    print('########')
+    print("########")
     print(pytest_report_header(None))
-    print('{} tests has been discovered in {}'.format(count, package_name))
-    print('########')
+    print("{} tests has been discovered in {}".format(count, package_name))
+    print("########")
     unittest.TextTestRunner(verbosity=3, stream=sys.stdout).run(test_suite)
 
 
-def test_package(package='..'):
+def test_package(package=".."):
     """Test package.
     This function is called by travis without arguments.
 
@@ -34,5 +34,5 @@ def test_package(package='..'):
     _run_tests(test_suite, package)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_package()

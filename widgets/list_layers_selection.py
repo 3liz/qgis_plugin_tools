@@ -8,14 +8,13 @@ from qgis.PyQt.QtWidgets import (
 )
 from qgis.core import QgsMapLayerModel, QgsProject, QgsMapLayer
 
-__copyright__ = 'Copyright 2019, 3Liz'
-__license__ = 'GPL version 3'
-__email__ = 'info@3liz.org'
-__revision__ = '$Format:%H$'
+__copyright__ = "Copyright 2019, 3Liz"
+__license__ = "GPL version 3"
+__email__ = "info@3liz.org"
+__revision__ = "$Format:%H$"
 
 
 class ListLayersSelection(QListWidget):
-
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setSelectionMode(QAbstractItemView.MultiSelection)
