@@ -12,9 +12,12 @@ def format_version_integer(version_string: str):
     return int("".join([a.zfill(2) for a in version_string.strip().split(".")]))
 
 
-def version() -> str:
+def version(remove_v_prefix=True) -> str:
     """Return the version defined in metadata.txt."""
-    return metadata_config()["general"]["version"]
+    v = metadata_config()["general"]["version"]
+    if v.startswith("v") and remove_v_prefix:
+        v = v[1:]
+    return v
 
 
 def is_dev_version() -> bool:
