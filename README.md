@@ -36,28 +36,10 @@ LOGGER.error('Log an error here')
 LOGGER.critical('Log a critical error here')
 ```
 
-Use the Makefile in your plugin root folder:
-
-```bash
-make help
-
-make docker_test
-
-make i18n_1_prepare
-make i18n_2_push
-make i18n_3_pull
-make i18n_4_compile
-
-make release_zip
-make release_tag
-make release_upload
-```
-
 ### How to install it in an existing plugin
 
 * Go to the root folder of your plugin
 * `git submodule add https://github.com/3liz/qgis_plugin_tools.git`
-* `pip3 install -r requirements_dev.txt`
 * Update the makefile with the template
 
 For setting up the logging:
@@ -91,23 +73,25 @@ For instance, you can setup environment variable in your bash for your credentia
 ## Plugin tree example
 
 Plugin `Foo` root folder:
-* `qgis_plugins_tools/` submodule
-* `resources/`
-  * `i18n/`
-    * `fr.ts`
-    * `fr.qm`
-  * `ui/`
-    * `main_dialog.ui`
-  * `icons/`
-    * `my_icon.svg`
-* `test/`
-* `.gitattributes`
+* `.docker`
+* `plugin_name`
+  * `qgis_plugins_tools/` submodule
+  * `resources/`
+    * `i18n/`
+      * `fr.ts`
+      * `fr.qm`
+    * `ui/`
+      * `main_dialog.ui`
+    * `icons/`
+      * `my_icon.svg`
+  * `test/`
+  * `__init__.py`
+  * `foo.py`
+  * `metadata.txt`
+* `.gitattributes
 * `.gitmodules`
 * `.gitignore`
-* `__init__.py`
-* `foo.py`
 * `Makefile`
-* `metadata.txt`
 
 ## Plugins using this module
 
