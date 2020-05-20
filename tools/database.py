@@ -16,7 +16,7 @@ def available_migrations(minimum_version: int):
         f for f in os.listdir(upgrade_dir) if os.path.isfile(os.path.join(upgrade_dir, f))
     ]
     files = []
-    
+
     for f in get_files:
         k = format_version_integer(f.replace("upgrade_to_", "").replace(".sql", "").strip())
         if k > minimum_version:
