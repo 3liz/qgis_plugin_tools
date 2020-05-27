@@ -110,3 +110,5 @@ database/postgresql-*.jar
 database/schemaspy-*.jar
 database/postgresql-*.jar.*
 database/schemaspy-*.jar.*
+
+.DS_Store
