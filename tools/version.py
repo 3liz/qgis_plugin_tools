@@ -18,9 +18,3 @@ def version(remove_v_prefix=True) -> str:
     if v.startswith("v") and remove_v_prefix:
         v = v[1:]
     return v
-
-
-def is_dev_version() -> bool:
-    """Return if the plugin is in a dev version."""
-    is_dev = version().find("-beta") != -1
-    return is_dev
