@@ -49,7 +49,7 @@ def get_uri_from_connection_name(connection_name, must_connect=True):
         error_message = e.msg
     except Exception:
         status = False
-        error_message = tr("Cannot connect to database with") + " %s" % connection_name
+        error_message = tr("Cannot connect to database with") + " " + connection_name
 
     if not connection and must_connect:
         return status, uri, error_message
