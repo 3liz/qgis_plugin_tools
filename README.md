@@ -36,11 +36,12 @@ LOGGER.error('Log an error here')
 LOGGER.critical('Log a critical error here')
 ```
 
-### How to install it in an existing plugin
+### How to install it
 
-* Go to the root folder of your plugin
+* Go to the root folder of your plugin code source
 * `git submodule add https://github.com/3liz/qgis_plugin_tools.git`
-* Update the makefile with the template
+
+### How to use it
 
 For setting up the logging:
 ```python
@@ -63,9 +64,6 @@ if file_path:
     QCoreApplication.installTranslator(self.translator)
 
 ```
-
-Setting the Makefile:
-* Copy the `Makefile.parent` content to your plugin's Makefile.
 
 * Using the plugin upload function, check the `--help` of the `plugin_upload.py` file.
 For instance, you can setup environment variable in your bash for your credentials.
