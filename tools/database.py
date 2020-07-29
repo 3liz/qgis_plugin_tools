@@ -23,6 +23,8 @@ def available_migrations(minimum_version: int):
     files = []
 
     for f in get_files:
+        if f == ".DS_Store":
+            continue
         k = format_version_integer(f.replace("upgrade_to_", "").replace(".sql", "").strip())
         if k > minimum_version:
             files.append([k, f])
