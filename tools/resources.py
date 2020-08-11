@@ -1,6 +1,9 @@
 """Tools to work with resource files."""
 
 import configparser
+import shutil
+import tempfile
+
 from os.path import abspath, join, pardir, dirname
 
 from qgis.PyQt import uic
@@ -51,11 +54,14 @@ def metadata_config() -> configparser:
     return config
 
 
-def plugin_test_data_path(*args):
+def plugin_test_data_path(*args, copy=False):
     """Get the path to the plugin test data path.
 
     :param args List of path elements e.g. ['img', 'logos', 'image.png']
     :type args: str
+
+    :param copy: If the file must be copied into a temporary directory first.
+    :type copy: bool
 
     :return: Absolute path to the resources folder.
     :rtype: str
@@ -64,7 +70,12 @@ def plugin_test_data_path(*args):
     for item in args:
         path = abspath(join(path, item))
 
-    return path
+    if copy:
+        temp = tempfile.mkdtemp()
+        shutil.copy(path, temp)
+        return join(temp, args[-1])
+    else:
+        return path
 
 
 def resources_path(*args):
