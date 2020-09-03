@@ -20,7 +20,7 @@ def plugin_path(*args):
     :param args List of path elements e.g. ['img', 'logos', 'image.png']
     :type args: str
 
-    :return: Absolute path to the resoure.
+    :return: Absolute path to the plugin path.
     :rtype: str
     """
     path = dirname(dirname(__file__))

@@ -32,9 +32,8 @@ def available_migrations(minimum_version: int):
     def getKey(item):
         return item[0]
 
-    sfiles = sorted(files, key=getKey)
-    sql_files = [s[1] for s in sfiles]
-    return sql_files
+    sql_files = sorted(files, key=getKey)
+    return [s[1] for s in sql_files]
 
 
 def get_uri_from_connection_name(connection_name, must_connect=True):
@@ -44,8 +43,8 @@ def get_uri_from_connection_name(connection_name, must_connect=True):
     error_message = ""
     connection = None
     try:
-        dbpluginclass = createDbPlugin("postgis", connection_name)
-        connection = dbpluginclass.connect()
+        db_plugin_class = createDbPlugin("postgis", connection_name)
+        connection = db_plugin_class.connect()
     except BaseError as e:
         status = False
         error_message = e.msg
@@ -56,7 +55,7 @@ def get_uri_from_connection_name(connection_name, must_connect=True):
     if not connection and must_connect:
         return status, uri, error_message
 
-    db = dbpluginclass.database()
+    db = db_plugin_class.database()
     if not db:
         status = False
         error_message = tr("Unable to get database from connection")
@@ -66,6 +65,7 @@ def get_uri_from_connection_name(connection_name, must_connect=True):
     return status, uri, ""
 
 
+# noinspection PyProtectedMember
 def fetch_data_from_sql_query(connection_name, sql):
 
     data = []
