@@ -123,7 +123,7 @@ def generate_processing_doc():
         for alg in algorithms_markdown[group]:
             markdown_all += alg
 
-    output_file = join(PATH, 'doc_processing.md')
+    output_file = join(PATH, 'README.md')
     text_file = open(output_file, "w+")
     text_file.write(markdown_all)
     text_file.close()
