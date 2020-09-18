@@ -11,7 +11,7 @@ LOGGER = setup_logger(plugin_name())
 
 
 class LoggerProcessingFeedBack(QgsProcessingFeedback):
-    def __init__(self, use_logger=False):
+    def __init__(self, use_logger=True):
         super().__init__()
         self._last = None
         self.use_logger = use_logger

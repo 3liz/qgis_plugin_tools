@@ -4,10 +4,13 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 import os
+import psycopg2
 
 from db_manager.db_plugins.plugin import BaseError
 from db_manager.db_plugins import createDbPlugin
 from db_manager.db_plugins.postgis.connector import PostGisDBConnector
+
+from qgis.core import Qgis, QgsProviderRegistry
 
 from .i18n import tr
 from .resources import plugin_path
@@ -47,7 +50,8 @@ def get_uri_from_connection_name(connection_name, must_connect=True):
     except BaseError as e:
         status = False
         error_message = e.msg
-    except Exception:
+    except Exception as e:
+        print(e)
         status = False
         error_message = tr("Cannot connect to database with") + " " + connection_name
 
@@ -74,34 +78,54 @@ def fetch_data_from_sql_query(connection_name, sql):
     status, uri, error_message = get_uri_from_connection_name(connection_name)
 
     if not uri:
-        ok = False
-        return header, data, rowCount, ok, error_message
+        return header, data, rowCount, False, error_message
     try:
-        connector = PostGisDBConnector(uri)
-    except Exception:
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
+            connector = metadata.findConnection(connection_name)
+            # connection.connectionName = lambda: connection_name
+            # connection.providerName = lambda: 'postgres'
+            # connector_db = PostGisDBConnector(uri, connection)
+            # print("CONNECTOR")
+            # print(type(connector_db))
+            # print(connector_db.uri())
+            # if connector_db.uri().service():
+            #     connector = psycopg2.connect(
+            #         service=uri.service(),
+            #     )
+            # else:
+            #     connector_db = psycopg2.connect(
+            #         host=uri.host(), database=uri.database(),
+            #         user=uri.username(), password=uri.password(),
+            #     )
+        else:
+            connector = PostGisDBConnector(uri)
+    except ZeroDivisionError:
         error_message = tr("Cannot connect to database")
-        ok = False
-        return header, data, rowCount, ok, error_message
+        return header, data, rowCount, False, error_message
 
     c = None
     ok = True
     # print "run query"
     try:
-        c = connector._execute(None, str(sql))
-        data = []
-        header = connector._get_cursor_columns(c)
-        if header is None:
-            header = []
-        if len(header) > 0:
-            data = connector._fetchall(c)
-        rowCount = c.rowcount
-        if rowCount == -1:
-            rowCount = len(data)
+        if Qgis.QGIS_VERSION_INT() >= 31400:
+            # TODO
+            pass
+        else:
+            c = connector._execute(None, str(sql))
+            data = []
+            header = connector._get_cursor_columns(c)
+            if header is None:
+                header = []
+            if len(header) > 0:
+                data = connector._fetchall(c)
+            rowCount = c.rowcount
+            if rowCount == -1:
+                rowCount = len(data)
 
     except BaseError as e:
-        ok = False
         error_message = e.msg
-        return header, data, rowCount, ok, error_message
+        return header, data, rowCount, False, error_message
     finally:
         if c:
             c.close()

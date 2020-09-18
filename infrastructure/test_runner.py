@@ -1,4 +1,5 @@
 import unittest
+import sys
 
 from .conftest import pytest_report_header
 
@@ -18,7 +19,7 @@ def _run_tests(test_suite, package_name):
     print(pytest_report_header(None))
     print("{} tests has been discovered in {}".format(count, package_name))
     print("######## Running tests ########")
-    results = unittest.TextTestRunner(verbosity=2).run(test_suite)
+    results = unittest.TextTestRunner(verbosity=3, stream=sys.stdout).run(test_suite)
     print("######## Summary       ########")
     print("Errors               : {}".format(len(results.errors)))
     print("Failures             : {}".format(len(results.failures)))
