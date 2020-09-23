@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
 from os.path import join, basename, dirname
 
-from qgis.core import QgsProcessingParameterDefinition, QgsProcessingParameterNumber
+from qgis.core import (
+    QgsProcessingParameterDefinition,
+    QgsProcessingParameterNumber,
+    QgsProcessingParameterFeatureSink,
+    QgsProcessingParameterVectorLayer,
+)
 from qgis.PyQt.QtCore import QRect, QPoint, QSize
 from processing import createAlgorithmDialog
 
@@ -77,12 +82,24 @@ def generate_processing_doc():
         screen = r.grab(QRect(QPoint(0, 0), QSize(-1, -1)))
         screen.save(output_screen)
 
-        param_markdown = ''
+        param_markdown = 'No parameter'
         for param in alg.parameterDefinitions():
             if hasattr(param, 'tooltip_3liz'):
                 info = param.tooltip_3liz
             else:
                 info = ''
+
+            dict_type = {
+                -1: 'VectorAnyGeometry',
+                -2: 'MapLayer',
+                0: 'Point',
+                1: 'Line',
+                2: 'Polygon',
+                3: 'Raster',
+                4: 'File',
+                5: 'Vector',
+                6: 'Mesh'
+            }
 
             option = ''
             if param.defaultValue():
@@ -98,8 +115,15 @@ def generate_processing_doc():
                     option += 'Min: ' + str(param.minimum()) + ', '
                 if param.maximum():
                     option += 'Max: ' + str(param.maximum())
+            elif isinstance(param, QgsProcessingParameterVectorLayer):
+                option += 'Type: '
+                name_types = [dict_type[item] for item in param.dataTypes()]
+                option += ', '.join(name_types)
 
-            param_markdown += TEMPLATE_PARAMETERS.format(
+            elif isinstance(param, QgsProcessingParameterFeatureSink):
+                option += 'Type: ' + param.dataType().sourceTypeToString()
+
+            param_markdown = TEMPLATE_PARAMETERS.format(
                 id=param.name(),
                 type=format_type(param.__class__.__name__),
                 description=param.description(),
@@ -109,13 +133,13 @@ def generate_processing_doc():
                 option=option
             )
 
-        output_markdown = ''
+        output_markdown = 'No Output'
         for output in alg.outputDefinitions():
             if hasattr(output, 'tooltip_3liz'):
                 info = output.tooltip_3liz
             else:
                 info = ''
-            output_markdown += TEMPLATE_OUTPUT.format(
+            output_markdown = TEMPLATE_OUTPUT.format(
                 id=output.name(),
                 type=format_type(output.__class__.__name__),
                 description=output.description(),
