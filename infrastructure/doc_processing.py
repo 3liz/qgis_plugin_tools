@@ -124,7 +124,7 @@ def generate_processing_doc():
 
         markdown = TEMPLATE_ALGORITHM.format(
             title=alg.displayName(),
-            help_string=alg.shortHelpString(),
+            help_string=alg.shortHelpString() if alg.shortHelpString() else '',
             parameters=param_markdown,
             outputs=output_markdown,
             img='./{}'.format(basename(output_screen)),
