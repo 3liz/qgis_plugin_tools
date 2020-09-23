@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from os.path import join, basename, dirname
 
-from qgis.core import QgsProcessingParameterDefinition, QgsProcessingParameterNumber
+from qgis.core import QgsProcessingParameterDefinition, QgsProcessingParameterNumber, QgsProcessingParameterFeatureSink, QgsProcessingParameterVectorLayer
 from qgis.PyQt.QtCore import QRect, QPoint, QSize
 from processing import createAlgorithmDialog
 
@@ -98,6 +98,18 @@ def generate_processing_doc():
                     option += 'Min: ' + str(param.minimum()) + ', '
                 if param.maximum():
                     option += 'Max: ' + str(param.maximum())
+            elif isinstance(param, QgsProcessingParameterVectorLayer):
+                name_type = 'Type: '
+                for item in param.dataTypes():
+                    if item == 0:
+                        name_type += 'Point '
+                    elif item == 1:
+                        name_type += 'Line '
+                    if item == 2:
+                        name_type += 'Polygon '
+                option += name_type
+            elif isinstance(param, QgsProcessingParameterFeatureSink):
+                'Type: ' + param.dataType().sourceTypeToString()
 
             param_markdown += TEMPLATE_PARAMETERS.format(
                 id=param.name(),
