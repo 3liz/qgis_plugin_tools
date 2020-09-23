@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 from os.path import join, basename, dirname
 
-from qgis.core import QgsProcessingParameterDefinition
+from qgis.core import QgsProcessingParameterDefinition, QgsProcessingParameterNumber
 from qgis.PyQt.QtCore import QRect, QPoint, QSize
 from processing import createAlgorithmDialog
 
 from qgis.utils import plugins
 
 plugin_name = basename(dirname(dirname(dirname(__file__))))
+# plugin_name = 'gestion_base_adresse'
 provider = plugins[plugin_name].provider
 
 
@@ -37,8 +38,8 @@ TEMPLATE_ALGORITHM = '''
 
 #### Parameters
 
-| ID | Description | Type | Info | Required | Advanced |
-|:-:|:-:|:-:|:-:|:-:|:-:|
+| ID | Description | Type | Info | Required | Advanced | Option |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 {parameters}
 
 #### Outputs
@@ -51,7 +52,7 @@ TEMPLATE_ALGORITHM = '''
 
 '''
 
-TEMPLATE_PARAMETERS = '{id}|{description}|{type}|{info}|{required}|{advanced}|\n'
+TEMPLATE_PARAMETERS = '{id}|{description}|{type}|{info}|{required}|{advanced}|{option}|\n'
 
 TEMPLATE_OUTPUT = '{id}|{description}|{type}|{info}|\n'
 
@@ -82,13 +83,30 @@ def generate_processing_doc():
                 info = param.tooltip_3liz
             else:
                 info = ''
+
+            option = ''
+            if param.defaultValue():
+                option += 'Default: ' + str(param.defaultValue()) + ' <br> '
+
+            if isinstance(param, QgsProcessingParameterNumber):
+                if param.dataType() == QgsProcessingParameterNumber.Double:
+                    name_type = 'Double'
+                else:
+                    name_type = 'Integer'
+                option += 'Type: ' + name_type + '<br> '
+                if param.minimum():
+                    option += 'Min: ' + str(param.minimum()) + ', '
+                if param.maximum():
+                    option += 'Max: ' + str(param.maximum())
+
             param_markdown += TEMPLATE_PARAMETERS.format(
                 id=param.name(),
                 type=format_type(param.__class__.__name__),
                 description=param.description(),
                 info=info,
                 required='' if param.flags() & QgsProcessingParameterDefinition.FlagOptional else '✓',
-                advanced='✓' if param.flags() & QgsProcessingParameterDefinition.FlagAdvanced else ''
+                advanced='✓' if param.flags() & QgsProcessingParameterDefinition.FlagAdvanced else '',
+                option=option
             )
 
         output_markdown = ''
@@ -124,6 +142,7 @@ def generate_processing_doc():
             markdown_all += alg
 
     output_file = join(PATH, 'README.md')
+    # output_file = join('/home/pdrillin/dev/', 'README.md')
     text_file = open(output_file, "w+")
     text_file.write(markdown_all)
     text_file.close()
