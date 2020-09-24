@@ -83,13 +83,13 @@ def generate_processing_doc():
         screen = r.grab(QRect(QPoint(0, 0), QSize(-1, -1)))
         screen.save(output_screen)
 
-        param_markdown = 'No parameter'
+        param_markdown = ''
         for param in alg.parameterDefinitions():
             if hasattr(param, 'tooltip_3liz'):
                 info = param.tooltip_3liz
             else:
                 info = ''
-            
+
             if Qgis.QGIS_VERSION_INT >= 31500 and not info:
                 info = param.help()
 
@@ -131,7 +131,7 @@ def generate_processing_doc():
             elif isinstance(param, QgsProcessingParameterFeatureSink):
                 option += 'Type: ' + param.dataType().sourceTypeToString()
 
-            param_markdown = TEMPLATE_PARAMETERS.format(
+            param_markdown += TEMPLATE_PARAMETERS.format(
                 id=param.name(),
                 type=format_type(param.__class__.__name__),
                 description=param.description(),
@@ -141,13 +141,13 @@ def generate_processing_doc():
                 option=option
             )
 
-        output_markdown = 'No Output'
+        output_markdown = ''
         for output in alg.outputDefinitions():
             if hasattr(output, 'tooltip_3liz'):
                 info = output.tooltip_3liz
             else:
                 info = ''
-            output_markdown = TEMPLATE_OUTPUT.format(
+            output_markdown += TEMPLATE_OUTPUT.format(
                 id=output.name(),
                 type=format_type(output.__class__.__name__),
                 description=output.description(),
@@ -157,8 +157,8 @@ def generate_processing_doc():
         markdown = TEMPLATE_ALGORITHM.format(
             title=alg.displayName(),
             help_string=alg.shortHelpString() if alg.shortHelpString() else '',
-            parameters=param_markdown,
-            outputs=output_markdown,
+            parameters=param_markdown if param_markdown else 'No parameter',
+            outputs=output_markdown if output_markdown else 'No output',
             img='./{}'.format(basename(output_screen)),
             algo_id=alg.id(),
         )
