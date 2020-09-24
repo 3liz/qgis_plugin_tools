@@ -7,6 +7,7 @@ from qgis.core import (
     QgsProcessingParameterFeatureSink,
     QgsProcessingParameterVectorLayer,
     QgsProcessing,
+    QgsProcessingParameterEnum,
 )
 from qgis.PyQt.QtCore import QRect, QPoint, QSize
 from processing import createAlgorithmDialog
@@ -118,18 +119,22 @@ def generate_processing_doc():
                 if param.minimum():
                     option += 'Min: ' + str(param.minimum()) + ', '
                 if param.maximum():
-                    option += 'Max: ' + str(param.maximum())
+                    option += 'Max: ' + str(param.maximum()) + ' <br>'
             elif isinstance(param, QgsProcessingParameterVectorLayer):
                 option += 'Type: '
                 if Qgis.QGIS_VERSION_INT < 30600:
                     name_types = [dict_type[item] for item in param.dataTypes()]
-                    option += ', '.join(name_types)
+                    option += ', '.join(name_types) + ' <br>'
                 else:
                     name_types = [QgsProcessing.sourceTypeToString(item) for item in param.dataTypes()]
-                    option += ', '.join(name_types)
+                    option += ', '.join(name_types) + ' <br>'
 
             elif isinstance(param, QgsProcessingParameterFeatureSink):
                 option += 'Type: ' + param.dataType().sourceTypeToString()
+            elif isinstance(param, QgsProcessingParameterEnum):
+                list_value = param.options()
+                option += 'Values: '
+                option += ', '.join(list_value) + ' <br>'
 
             param_markdown += TEMPLATE_PARAMETERS.format(
                 id=param.name(),
