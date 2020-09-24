@@ -15,7 +15,7 @@ from processing import createAlgorithmDialog
 from qgis.utils import plugins, Qgis
 
 plugin_name = basename(dirname(dirname(dirname(__file__))))
-# plugin_name = 'gestion_base_adresse'
+# plugin_name = 'AsaPerimetre'
 provider = plugins[plugin_name].provider
 
 
@@ -130,7 +130,12 @@ def generate_processing_doc():
                     option += ', '.join(name_types) + ' <br>'
 
             elif isinstance(param, QgsProcessingParameterFeatureSink):
-                option += 'Type: ' + param.dataType().sourceTypeToString()
+                option += 'Type: '
+                if Qgis.QGIS_VERSION_INT < 30600:
+                    option += dict_type[param.dataType()] + ' <br>'
+                else:
+                    option += QgsProcessing.sourceTypeToString(param.dataType()) + ' <br>'
+
             elif isinstance(param, QgsProcessingParameterEnum):
                 list_value = param.options()
                 option += 'Values: '
