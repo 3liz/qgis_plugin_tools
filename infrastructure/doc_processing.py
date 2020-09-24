@@ -6,11 +6,12 @@ from qgis.core import (
     QgsProcessingParameterNumber,
     QgsProcessingParameterFeatureSink,
     QgsProcessingParameterVectorLayer,
+    QgsProcessing,
 )
 from qgis.PyQt.QtCore import QRect, QPoint, QSize
 from processing import createAlgorithmDialog
 
-from qgis.utils import plugins
+from qgis.utils import plugins, Qgis
 
 plugin_name = basename(dirname(dirname(dirname(__file__))))
 # plugin_name = 'gestion_base_adresse'
@@ -88,6 +89,9 @@ def generate_processing_doc():
                 info = param.tooltip_3liz
             else:
                 info = ''
+            
+            if Qgis.QGIS_VERSION_INT >= 31500 and not info:
+                info = param.help()
 
             dict_type = {
                 -1: 'VectorAnyGeometry',
@@ -117,8 +121,12 @@ def generate_processing_doc():
                     option += 'Max: ' + str(param.maximum())
             elif isinstance(param, QgsProcessingParameterVectorLayer):
                 option += 'Type: '
-                name_types = [dict_type[item] for item in param.dataTypes()]
-                option += ', '.join(name_types)
+                if Qgis.QGIS_VERSION_INT < 30600:
+                    name_types = [dict_type[item] for item in param.dataTypes()]
+                    option += ', '.join(name_types)
+                else:
+                    name_types = [QgsProcessing.sourceTypeToString(item) for item in param.dataTypes()]
+                    option += ', '.join(name_types)
 
             elif isinstance(param, QgsProcessingParameterFeatureSink):
                 option += 'Type: ' + param.dataType().sourceTypeToString()
