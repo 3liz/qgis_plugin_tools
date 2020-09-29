@@ -24,6 +24,7 @@ PATH = '/processing'
 TEMPLATE = '''---
 Title: {title}
 Favicon: ../icon.png
+Up: True
 ...
 
 [TOC]
