@@ -6,6 +6,13 @@ As it's a submodule, you can configure your GIT to auto update the submodule com
 
 `git config --global submodule.recurse true`
 
+### QGIS-Plugin-CI
+
+The scope of the repository has decreased. All the packaging, translations steps are easier when using QGIS-Plugin-CI.
+https://github.com/opengisch/qgis-plugin-ci
+
+A docker image is available https://github.com/3liz/docker-qgis-plugin-ci
+
 ### How to use it
 
 The module is helping you with:
@@ -16,8 +23,6 @@ The module is helping you with:
 * removing QRC resources file easily
 * translate using the `i18n.tr()` function.
 * launching tests on Travis
-* managing the release process : zip, upload on plugins.qgis.org, tag, GitHub release
-* running pylint checks
 * providing some common widgets/code for plugins
 
 To use the logging system:

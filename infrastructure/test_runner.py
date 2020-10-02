@@ -8,7 +8,7 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 
-def _run_tests(test_suite, package_name):
+def _run_tests(test_suite, package_name, pattern):
     """Core function to test a test suite.
 
     :param test_suite: Unittest test suite
@@ -16,7 +16,7 @@ def _run_tests(test_suite, package_name):
     count = test_suite.countTestCases()
     print("######## Environment   ########")
     print(pytest_report_header(None))
-    print("{} tests has been discovered in {}".format(count, package_name))
+    print("{} tests has been discovered in {} with pattern {}".format(count, package_name, pattern))
     print("######## Running tests ########")
     results = unittest.TextTestRunner(verbosity=2).run(test_suite)
     print("######## Summary       ########")
@@ -33,7 +33,7 @@ def _run_tests(test_suite, package_name):
     print("TOTAL                : {}".format(results.testsRun))
 
 
-def test_package(package=".."):
+def test_package(package="..", pattern="test_*.py"):
     """Test package.
     This function is called by travis without arguments.
 
@@ -41,8 +41,8 @@ def test_package(package=".."):
     :type package: str
     """
     test_loader = unittest.defaultTestLoader
-    test_suite = test_loader.discover(package)
-    _run_tests(test_suite, package)
+    test_suite = test_loader.discover(package, pattern=pattern)
+    _run_tests(test_suite, package, pattern)
 
 
 if __name__ == "__main__":
