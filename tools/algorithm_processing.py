@@ -1,4 +1,6 @@
 """Base class algorithm."""
+
+from abc import ABCMeta
 from os.path import isfile
 
 from qgis.core import QgsProcessingAlgorithm
@@ -13,7 +15,7 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 
-class BaseProcessingAlgorithm(QgsProcessingAlgorithm):
+class BaseProcessingAlgorithm(QgsProcessingAlgorithm, metaclass=ABCMeta):
 
     def __init__(self):
         super().__init__()
