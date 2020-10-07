@@ -1,6 +1,6 @@
 """Base class algorithm."""
 
-from abc import ABCMeta
+from abc import abstractmethod
 from os.path import isfile
 
 from qgis.core import QgsProcessingAlgorithm
@@ -15,7 +15,7 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 
-class BaseProcessingAlgorithm(QgsProcessingAlgorithm, metaclass=ABCMeta):
+class BaseProcessingAlgorithm(QgsProcessingAlgorithm):
 
     def __init__(self):
         super().__init__()
@@ -33,5 +33,6 @@ class BaseProcessingAlgorithm(QgsProcessingAlgorithm, metaclass=ABCMeta):
         else:
             return super().icon()
 
+    @abstractmethod
     def shortHelpString(self):
-        raise NotImplementedError
+        pass
