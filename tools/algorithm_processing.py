@@ -3,7 +3,7 @@
 from abc import abstractmethod
 from os.path import isfile
 
-from qgis.core import QgsProcessingAlgorithm
+from qgis.core import Qgis, QgsProcessingAlgorithm
 from qgis.PyQt.QtGui import QIcon
 
 from .resources import resources_path
@@ -32,6 +32,25 @@ class BaseProcessingAlgorithm(QgsProcessingAlgorithm):
             return QIcon(icon)
         else:
             return super().icon()
+
+    def parameters_help_string(self) -> str:
+        """ Return a formatted help string for all parameters. """
+        help_string = ''
+
+        for param in self.parameterDefinitions():
+            template = '{} : {}\n\n'
+            if hasattr(param, 'tooltip_3liz'):
+                info = param.tooltip_3liz
+            else:
+                info = ''
+
+            if Qgis.QGIS_VERSION_INT >= 31500:
+                info = param.help()
+
+            if info:
+                help_string += template.format(param.name(), info)
+
+        return help_string
 
     @abstractmethod
     def shortHelpString(self):
