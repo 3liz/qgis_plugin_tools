@@ -50,7 +50,7 @@ def metadata_config() -> configparser:
     """
     path = plugin_path("metadata.txt")
     config = configparser.ConfigParser()
-    config.read(path)
+    config.read(path, encoding='utf8')
     return config
 
 
