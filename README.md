@@ -1,10 +1,8 @@
 ## QGIS Plugin core tools
 
-## The API is not stable yet. Function and files may move between commits.
+## This API won't be stable.
 
-As it's a submodule, you can configure your GIT to auto update the submodule commit by running:
-
-`git config --global submodule.recurse true`
+All the packaging moved to QGIS-Plugin-CI.
 
 ### QGIS-Plugin-CI
 
@@ -14,6 +12,10 @@ https://github.com/opengisch/qgis-plugin-ci
 A docker image is available https://github.com/3liz/docker-qgis-plugin-ci
 
 ### How to use it
+
+As it's a submodule, you can configure your GIT to auto update the submodule commit by running:
+
+`git config --global submodule.recurse true`
 
 The module is helping you with:
 * setting up some logging (QgsMessageLog, file log, remote logs...)
