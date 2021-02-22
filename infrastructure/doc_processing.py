@@ -22,14 +22,11 @@ provider = plugins[plugin_name].provider
 PATH = '/processing'
 
 TEMPLATE = '''---
-Title: {title}
-Favicon: ../icon.png
-Up: True
-...
+hide:
+  - navigation
+---
 
-[TOC]
-
-# {title}
+# Processing
 '''
 
 TEMPLATE_GROUP = '''
@@ -74,7 +71,7 @@ def format_type(class_name):
 def generate_processing_doc():
     global TEMPLATE
 
-    markdown_all = TEMPLATE.format(title=provider.name())
+    markdown_all = TEMPLATE
     algorithms_markdown = {}
 
     for alg in provider.algorithms():
