@@ -38,6 +38,6 @@ def variant_type_icon(field_type) -> QIcon:
 def provider_fields(fields):
     fields_from_provider = QgsFields()
     for i in range(fields.count()):
-        if fields.fieldOrigin(i) == QgsFields.OriginProvider:
+        if fields.fieldOrigin(i) == QgsFields.FieldOrigin.OriginProvider:
             fields_from_provider.append(fields.at(i))
     return fields_from_provider

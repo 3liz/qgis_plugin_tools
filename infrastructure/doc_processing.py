@@ -109,7 +109,7 @@ def generate_processing_doc():
                 option += 'Default: ' + str(param.defaultValue()) + ' <br> '
 
             if isinstance(param, QgsProcessingParameterNumber):
-                if param.dataType() == QgsProcessingParameterNumber.Double:
+                if param.dataType() == QgsProcessingParameterNumber.Type.Double:
                     name_type = 'Double'
                 else:
                     name_type = 'Integer'
@@ -144,8 +144,8 @@ def generate_processing_doc():
                 type=format_type(param.__class__.__name__),
                 description=param.description(),
                 info=info,
-                required='' if param.flags() & QgsProcessingParameterDefinition.FlagOptional else '✓',
-                advanced='✓' if param.flags() & QgsProcessingParameterDefinition.FlagAdvanced else '',
+                required='' if param.flags() & QgsProcessingParameterDefinition.Flag.FlagOptional else '✓',
+                advanced='✓' if param.flags() & QgsProcessingParameterDefinition.Flag.FlagAdvanced else '',
                 option=option
             )
 
