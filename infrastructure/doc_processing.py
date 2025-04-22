@@ -69,9 +69,7 @@ def format_type(class_name):
 
 
 def generate_processing_doc():
-    global TEMPLATE
-
-    markdown_all = TEMPLATE
+    markdown_all = str(TEMPLATE)
     algorithms_markdown = {}
 
     for alg in provider.algorithms():
@@ -84,13 +82,8 @@ def generate_processing_doc():
 
         param_markdown = ''
         for param in alg.parameterDefinitions():
-            if hasattr(param, 'tooltip_3liz'):
-                info = param.tooltip_3liz
-            else:
-                info = ''
 
-            if Qgis.QGIS_VERSION_INT >= 31500 and not info:
-                info = param.help()
+            info = param.help()
 
             dict_type = {
                 -1: 'VectorAnyGeometry',
@@ -151,10 +144,7 @@ def generate_processing_doc():
 
         output_markdown = ''
         for output in alg.outputDefinitions():
-            if hasattr(output, 'tooltip_3liz'):
-                info = output.tooltip_3liz
-            else:
-                info = ''
+            info = ''
             output_markdown += TEMPLATE_OUTPUT.format(
                 id=output.name(),
                 type=format_type(output.__class__.__name__),
